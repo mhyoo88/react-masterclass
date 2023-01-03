@@ -1,3 +1,5 @@
+import { valueToNode } from "@babel/types";
+import { useState } from "react";
 import styled from "styled-components";
 
 interface ContainerProps {
@@ -15,19 +17,23 @@ const Container = styled.div<ContainerProps>`
 
 interface CircleProps {
   bgColor: string;
-  borderColor?: string; //optional === borderColor: string | undefined;
+  borderColor?: string;
 
   text?: string;
 }
 
 function Circle({ bgColor, borderColor, text = "default text" }: CircleProps) {
-  //text = "" -> ES6 default 값
-  //component의 prop에 전근 하는 방법. 인자로 받아온다.
+  const [counter, setCounter] = useState(1); //타입 스크립트는 default value로 number 타입이란 것을 알아서 추정한다.
+  // setCounter("hey"); //warning 을 준다
+
+  const [value, setValue] = useState<number | string>(0); //set하는 value 값이 number도 될수 있고 string도 될 수 있다는 것을 알려준다.
+  setValue("hey"); // 보통 state는 같은 타입으로 가지만 예외적인 상황에 필요할때 쓴다.
+
   return (
     <Container bgColor={bgColor} borderColor={borderColor ?? bgColor}>
       {text}
     </Container>
-  ); // CircleProps 에선 borderColor가 옵셔널이라 Circle 컴포넌트에 borderColor가 없어도 에러가 안나지만 Container는 필수 값이라 에러가 난다 그렇다면 대체 할 default 값 보내기 할 수 있다.
+  );
 }
 
 export default Circle;
