@@ -13,10 +13,15 @@ const Wrapper = styled.div`
   background-color: ${(props) => props.theme.backgroundColor}; ;
 `;
 
+const Text = styled.span`
+  color: tomato;
+`;
+
 function App() {
   return (
     <Wrapper>
       <Title>이건 바로 테마 색이야</Title>
+      <Text>dd</Text>
     </Wrapper>
   );
 }
