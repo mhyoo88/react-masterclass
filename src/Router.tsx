@@ -4,6 +4,7 @@ import Root from "./Root";
 import About from "./screens/About";
 import Home from "./screens/Home";
 import NotFound from "./screens/NotFound";
+import Followers from "./screens/users/Followers";
 import User from "./screens/users/User";
 
 const router = createBrowserRouter([
@@ -23,6 +24,12 @@ const router = createBrowserRouter([
       {
         path: "users/:userId", //children 안만들고 한번에 한이유는 users 에 갈 필요가 없기 때문에
         element: <User />,
+        children: [
+          {
+            path: "followers",
+            element: <Followers />,
+          },
+        ],
       },
     ],
     errorElement: <NotFound />,
