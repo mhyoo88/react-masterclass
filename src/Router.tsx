@@ -1,7 +1,9 @@
 import { createBrowserRouter } from "react-router-dom";
+import ErroComponent from "./components/ErrorComponent";
 import Root from "./Root";
 import About from "./screens/About";
 import Home from "./screens/Home";
+import NotFound from "./screens/NotFound";
 
 const router = createBrowserRouter([
   {
@@ -11,12 +13,14 @@ const router = createBrowserRouter([
       {
         path: "",
         element: <Home />,
+        errorElement: <ErroComponent />, //사용자는 이게 없으면 빈화면을 보여질것이다. 일종의 에러 장벽을 만드는 것
       },
       {
         path: "about",
         element: <About />,
       },
     ],
+    errorElement: <NotFound />,
   },
 ]);
 
