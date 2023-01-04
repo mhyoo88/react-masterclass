@@ -1,7 +1,9 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
+import { RouterProvider } from "react-router";
 import { ThemeProvider } from "styled-components";
-import App from "./App";
+import Root from "./Root";
+import router from "./Router";
 import { darkTheme, lightTheme } from "./theme";
 
 const rootElement = document.getElementById("root");
@@ -10,8 +12,6 @@ const root = ReactDOM.createRoot(rootElement);
 
 root.render(
   <React.StrictMode>
-    <ThemeProvider theme={darkTheme}>
-      <App />
-    </ThemeProvider>
+    <RouterProvider router={router} />
   </React.StrictMode>
 );
