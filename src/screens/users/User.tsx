@@ -2,7 +2,7 @@ import { Link, Outlet, useOutletContext, useParams } from "react-router-dom";
 import { users } from "../../db";
 
 function User() {
-  console.log(useOutletContext());
+  // console.log(useOutletContext());
   const { userId } = useParams();
   return (
     <div>
