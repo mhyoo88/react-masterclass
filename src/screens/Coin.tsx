@@ -1,9 +1,10 @@
+import { Helmet } from "react-helmet";
 import { useState } from "react";
 import { useQuery } from "react-query";
 import { useLocation, useParams } from "react-router";
 import { Link, Outlet, useMatch } from "react-router-dom";
 import styled from "styled-components";
-import { fetchCoinInfo } from "../api";
+import { fetchCoinInfo, fetchCoinTickers } from "../api";
 
 const Container = styled.div`
   padding: 0px 10px;
@@ -151,16 +152,27 @@ function Coin() {
   );
   const { isLoading: tickersloading, data: tickersData } = useQuery<PriceData>(
     ["tickers", coinId],
-    () => fetchCoinInfo(coinId)
+    () => fetchCoinTickers(coinId),
+    {
+      refetchInterval: 5000,
+    }
   ); //coinId - 식별하기 위한 고윳값
 
   const loading = infoloading || tickersloading;
-
   return (
     <Container>
       <Header>
+        <Helmet>
+          <title>
+            {state?.name
+              ? state.name
+              : "loading"
+              ? infoData?.name
+              : "Loading..."}
+          </title>
+        </Helmet>
         <Title>
-          {state?.name ? state.name : "loading" ? "Loading..." : infoData?.name}
+          {state?.name ? state.name : "loading" ? infoData?.name : "Loading..."}
         </Title>
       </Header>
       {loading ? (
@@ -177,8 +189,8 @@ function Coin() {
               <span>${infoData?.symbol}</span>
             </OverviewItem>
             <OverviewItem>
-              <span>Open Source:</span>
-              <span>{infoData?.open_source ? "Yes" : "No"}</span>
+              <span>Price:</span>
+              <span>{tickersData?.quotes.USD.price.toFixed(5)}</span>
             </OverviewItem>
           </Overview>
           <Description>{infoData?.description}</Description>
