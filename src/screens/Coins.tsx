@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
+import { useQuery } from "react-query";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
+import { fetchCoins } from "../api";
 
 const Container = styled.div`
   padding: 0px 10px;
@@ -50,7 +52,7 @@ const Img = styled.img`
   margin-right: 10px;
 `;
 
-interface CoinInterface {
+interface ICoin {
   id: string;
   name: string;
   symbol: string;
@@ -61,37 +63,42 @@ interface CoinInterface {
 }
 
 function Coins() {
-  const [coins, setCoins] = useState<CoinInterface[]>([]);
-  const [loading, setLoading] = useState(true);
-  useEffect(() => {
-    (async () => {
-      const response = await fetch("https://api.coinpaprika.com/v1/coins");
-      const json = await response.json();
-      setCoins(json.slice(0, 100));
-      setLoading(false);
-    })();
-  }, []);
+  const { isLoading, data } = useQuery<ICoin[]>("allCoins", fetchCoins); //타입스크립트 에러가 나기 떄문에 <ICoin[]>을 붙여주고 useQuery는 fetcher 함수를 부르고 fetcher 함수가 끝나면 Lodading에 bollean 값을 주고 data에 jason을 넣는다.
+
+  // const [coins, setCoins] = useState<CoinInterface[]>([]);
+  // const [loading, setLoading] = useState(true);
+  // useEffect(() => {
+  //   (async () => {
+  //     const response = await fetch("https://api.coinpaprika.com/v1/coins");
+  //     const json = await response.json();
+  //     setCoins(json.slice(0, 100));
+  //     setLoading(false);
+  //   })();
+  // }, []);
 
   return (
     <Container>
       <Header>
         <Title>코인</Title>
       </Header>
-      {loading ? (
+      {isLoading ? (
         <Loader>Loading...</Loader>
       ) : (
         <CoinsList>
-          {coins.map((coin) => (
-            <Coin key={coin.id}>
-              <Link to={`/${coin.id}`} state={coin}>
-                {/* state로 coin 정보를 해당 route에 보낼수 있다. */}
-                <Img
-                  src={`https://coinicons-api.vercel.app/api/icon/${coin.symbol.toLowerCase()}`}
-                />
-                ${coin.name} &rarr;
-              </Link>
-            </Coin>
-          ))}
+          {data?.slice(0, 100).map(
+            //data는 ICoin[] | undefined 이니 ?을 써서 nullor undefined값 을 처리할 때 폴백 값을 제공
+            (coin) => (
+              <Coin key={coin.id}>
+                <Link to={`/${coin.id}`} state={coin}>
+                  {/* state로 coin 정보를 해당 route에 보낼수 있다. */}
+                  <Img
+                    src={`https://coinicons-api.vercel.app/api/icon/${coin.symbol.toLowerCase()}`}
+                  />
+                  ${coin.name} &rarr;
+                </Link>
+              </Coin>
+            )
+          )}
         </CoinsList>
       )}
     </Container>
