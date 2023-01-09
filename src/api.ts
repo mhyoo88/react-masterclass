@@ -16,3 +16,12 @@ export function fetchCoinTickers(coinId: string | undefined) {
     response.json()
   );
 }
+
+export function fetchCoinHistory(coinId: string) {
+  const endDate = Math.floor(Date.now() / 1000); //now
+  const startDate = endDate - 60 * 60 * 24 * 7; // (60초 * 60분 * 24시간 * 7일)from now to a week ago
+  return fetch(
+    // `https://ohlcv-api.nomadcoders.workers.dev/?coinId=${coinId}?start=${startDate}&end=${endDate}`
+    `https://ohlcv-api.nomadcoders.workers.dev?coinId=${coinId}`
+  ).then((response) => response.json());
+}
