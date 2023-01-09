@@ -4,6 +4,8 @@ import ErroComponent from "./components/ErrorComponent";
 import Coin from "./screens/Coin";
 import NotFound from "./screens/NotFound";
 import Root from "./Root";
+import Chart from "./screens/Chart";
+import Price from "./screens/Price";
 
 const router = createBrowserRouter([
   {
@@ -18,12 +20,16 @@ const router = createBrowserRouter([
       {
         path: "/:coinId",
         element: <Coin />,
-        // children: [
-        //   {
-        //     path: "followers",
-        //     element: <Followers />,
-        //   },
-        // ],
+        children: [
+          {
+            path: "chart",
+            element: <Chart />,
+          },
+          {
+            path: "price",
+            element: <Price />,
+          },
+        ],
       },
     ],
     errorElement: <NotFound />,
