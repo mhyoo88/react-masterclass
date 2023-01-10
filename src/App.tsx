@@ -1,10 +1,4 @@
-import { Outlet } from "react-router";
 import { createGlobalStyle } from "styled-components";
-import { ReactQueryDevtools } from "react-query/devtools";
-import { ThemeProvider } from "styled-components";
-import { darkTheme, lightTheme } from "./theme";
-import { useRecoilValue } from "recoil";
-import { isDarkAtom } from "./atoms";
 
 const GlobalStyle = createGlobalStyle`
   @import url('https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@300;400&display=swap');
@@ -67,17 +61,12 @@ const GlobalStyle = createGlobalStyle`
   }
 `;
 
-function Root() {
-  const isDark = useRecoilValue(isDarkAtom);
+function App() {
   return (
     <>
-      <ThemeProvider theme={isDark ? darkTheme : lightTheme}>
-        <GlobalStyle />
-        <Outlet />
-        <ReactQueryDevtools initialIsOpen={true} />
-      </ThemeProvider>
+      <GlobalStyle />
     </>
   );
 }
 
-export default Root;
+export default App;
