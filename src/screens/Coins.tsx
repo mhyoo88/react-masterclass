@@ -1,9 +1,10 @@
 import { Helmet } from "react-helmet";
 import { useQuery } from "react-query";
 import { Link } from "react-router-dom";
+import { useSetRecoilState } from "recoil";
 import styled from "styled-components";
 import { fetchCoins } from "../api";
-import { useOutletContext } from "react-router";
+import { isDarkAtom } from "../atoms";
 
 const Container = styled.div`
   padding: 0px 10px;
@@ -63,13 +64,10 @@ interface ICoin {
   type: string;
 }
 
-interface IDarkModeButton {
-  toggleDark: () => void;
-}
-
 function Coins() {
-  const { isLoading, data } = useQuery<ICoin[]>("allCoins", fetchCoins); //타입스크립트 에러가 나기 떄문에 <ICoin[]>을 붙여주고 useQuery는 fetcher 함수를 부르고 fetcher 함수가 끝나면 Lodading에 bollean 값을 주고 data에 jason을 넣는다.
-  const { toggleDark } = useOutletContext<IDarkModeButton>();
+  const setDarkAtom = useSetRecoilState(isDarkAtom);
+  const toggleDarkAtom = () => setDarkAtom((prev) => !prev);
+  const { isLoading, data } = useQuery<ICoin[]>("allCoins", fetchCoins);
   return (
     <Container>
       <Helmet>
@@ -77,7 +75,7 @@ function Coins() {
       </Helmet>
       <Header>
         <Title>코인</Title>
-        <button onClick={toggleDark}>toggle Mode</button>
+        <button onClick={toggleDarkAtom}>push</button>
       </Header>
       {isLoading ? (
         <Loader>Loading...</Loader>
