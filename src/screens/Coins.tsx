@@ -3,6 +3,7 @@ import { useQuery } from "react-query";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { fetchCoins } from "../api";
+import { useOutletContext } from "react-router";
 
 const Container = styled.div`
   padding: 0px 10px;
@@ -21,7 +22,7 @@ const CoinsList = styled.ul``;
 
 const Coin = styled.li`
   background-color: white;
-  color: ${(props) => props.theme.bgColor};
+  color: ${(props) => props.theme.textColor};
   padding: 6px;
   border-radius: 15px;
   margin-bottom: 10px;
@@ -62,20 +63,13 @@ interface ICoin {
   type: string;
 }
 
+interface IDarkModeButton {
+  toggleDark: () => void;
+}
+
 function Coins() {
   const { isLoading, data } = useQuery<ICoin[]>("allCoins", fetchCoins); //타입스크립트 에러가 나기 떄문에 <ICoin[]>을 붙여주고 useQuery는 fetcher 함수를 부르고 fetcher 함수가 끝나면 Lodading에 bollean 값을 주고 data에 jason을 넣는다.
-
-  // const [coins, setCoins] = useState<CoinInterface[]>([]);
-  // const [loading, setLoading] = useState(true);
-  // useEffect(() => {
-  //   (async () => {
-  //     const response = await fetch("https://api.coinpaprika.com/v1/coins");
-  //     const json = await response.json();
-  //     setCoins(json.slice(0, 100));
-  //     setLoading(false);
-  //   })();
-  // }, []);
-
+  const { toggleDark } = useOutletContext<IDarkModeButton>();
   return (
     <Container>
       <Helmet>
@@ -83,6 +77,7 @@ function Coins() {
       </Helmet>
       <Header>
         <Title>코인</Title>
+        <button onClick={toggleDark}>toggle Mode</button>
       </Header>
       {isLoading ? (
         <Loader>Loading...</Loader>

@@ -1,7 +1,7 @@
 import { useQuery } from "react-query";
 import { useOutletContext } from "react-router";
 import { fetchCoinHistory } from "../api";
-import ApexChart from "react-apexcharts"; //Chart 이미 정의 되어 있기 때문에 ApexChart 라 정의함.
+import ApexChart from "react-apexcharts";
 
 interface IHistorical {
   time_open: number;
@@ -18,7 +18,12 @@ interface ChartProps {
   coinId: string;
 }
 
+interface IIsDarkmode {
+  isDark: boolean;
+}
+
 function Chart() {
+  const { isDark } = useOutletContext<IIsDarkmode>();
   const { coinId } = useOutletContext<ChartProps>();
   const { isLoading, data } = useQuery<IHistorical[]>(
     ["ohlcv", coinId],
@@ -44,7 +49,7 @@ function Chart() {
           ]}
           options={{
             theme: {
-              mode: "dark",
+              mode: isDark ? "dark" : "light",
             },
             chart: {
               height: 500,
