@@ -6,6 +6,11 @@ export interface IToDo {
   category: "TO_DO" | "DOING" | "DONE"; //명시된 string 중 하나만 가져야한다.
 }
 
+export const categoryState = atom({
+  key: "category",
+  default: "TO_DO",
+});
+
 export const toDoState = atom<IToDo[]>({
   key: "toDo",
   default: [],

@@ -1,5 +1,5 @@
-import { useRecoilValue } from "recoil";
-import { toDoSelector, toDoState } from "../atoms";
+import { useRecoilState, useRecoilValue } from "recoil";
+import { categoryState, toDoSelector, toDoState } from "../atoms";
 import CreacteToDo from "./CreateToDo";
 import ToDo from "./ToDo";
 import styled from "styled-components";
@@ -20,38 +20,28 @@ const TodoListUl = styled.ul`
 
 function TodoList() {
   const [toDo, doing, done] = useRecoilValue(toDoSelector);
-
+  const [category, setcategory] = useRecoilState(categoryState); //조회, 수정function
+  const onInput = (event: React.FormEvent<HTMLSelectElement>) => {
+    setcategory(event.currentTarget.value); // 해당 value
+  };
+  console.log(category); //셀릭트 값에 따라서 상태가 변한다.
   return (
     <div>
       <h1>Todos</h1>
-
       <hr />
+      <select value={category} onInput={onInput}>
+        <option value="TO_DO">To Do</option>
+        <option value="DOING">Doing</option>
+        <option value="DONE">Done</option>
+      </select>
       <CreacteToDo />
-      <h2>To Do</h2>
-      <TodoListUl>
-        {/* {toDos.map((toDo) => <ToDo text={toDo.category} category={toDo.category} id={toDo.id}/>)} */}
-        {toDo.map((toDo) => (
-          <ToDo key={toDo.id} {...toDo} /> //toDos 배열의 toDo 원소 하나하나가 ToDo 컴포넌트에 필요한 props 와 같은 모양이기 떄문에
-        ))}
-      </TodoListUl>
-
-      <hr />
-      <CreacteToDo />
-      <h2>Doing</h2>
-      <TodoListUl>
-        {doing.map((toDo) => (
-          <ToDo key={toDo.id} {...toDo} />
-        ))}
-      </TodoListUl>
-
-      <hr />
-      <CreacteToDo />
-      <h2>Done</h2>
-      <TodoListUl>
-        {done.map((toDo) => (
-          <ToDo key={toDo.id} {...toDo} />
-        ))}
-      </TodoListUl>
+      {/* 하나의 배열을 가져와서 컴포넌트로 나눌때 */}
+      {category === "TO_DO" &&
+        toDo.map((todo) => <ToDo key={todo.id} {...todo} />)}
+      {category === "DOING" &&
+        doing.map((todo) => <ToDo key={todo.id} {...todo} />)}
+      {category === "DONE" &&
+        done.map((todo) => <ToDo key={todo.id} {...todo} />)}
     </div>
   );
 }
