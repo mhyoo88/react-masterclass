@@ -19,7 +19,7 @@ const TodoListUl = styled.ul`
 `;
 
 function TodoList() {
-  const [toDo, doing, done] = useRecoilValue(toDoSelector);
+  const toDos = useRecoilValue(toDoSelector);
   const [category, setcategory] = useRecoilState(categoryState); //조회, 수정function
   const onInput = (event: React.FormEvent<HTMLSelectElement>) => {
     setcategory(event.currentTarget.value); // 해당 value
@@ -35,13 +35,9 @@ function TodoList() {
         <option value="DONE">Done</option>
       </select>
       <CreacteToDo />
-      {/* 하나의 배열을 가져와서 컴포넌트로 나눌때 */}
-      {category === "TO_DO" &&
-        toDo.map((todo) => <ToDo key={todo.id} {...todo} />)}
-      {category === "DOING" &&
-        doing.map((todo) => <ToDo key={todo.id} {...todo} />)}
-      {category === "DONE" &&
-        done.map((todo) => <ToDo key={todo.id} {...todo} />)}
+      {toDos.map((todo) => (
+        <ToDo key={todo.id} {...todo} />
+      ))}
     </div>
   );
 }

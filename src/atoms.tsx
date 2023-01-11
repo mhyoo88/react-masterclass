@@ -20,10 +20,7 @@ export const toDoSelector = selector({
   key: "toDoSelector",
   get: ({ get }) => {
     const toDos = get(toDoState); //atom 이 변하면 selector 도 변한다.
-    return [
-      toDos.filter((toDo) => toDo.category === "TO_DO"),
-      toDos.filter((toDo) => toDo.category === "DOING"),
-      toDos.filter((toDo) => toDo.category === "DONE"),
-    ];
+    const category = get(categoryState);
+    return toDos.filter((toDo) => toDo.category === category);
   },
 });
