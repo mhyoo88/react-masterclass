@@ -1,16 +1,22 @@
 import { atom, selector } from "recoil";
 
-type categories = "TO_DO" | "DOING" | "DONE";
+export enum Categories {
+  // "TO_DO", //기본값이 숫자 라서 category가 숫자로 된다 0, 1, 2
+  //.원한다면 string으로 변경한다.
+  "TO_DO" = "TO_DO",
+  "DOING" = "DOING",
+  "DONE" = "DONE",
+}
 
 export interface IToDo {
   text: string;
   id: number;
-  category: categories; //명시된 string 중 하나만 가져야한다.
+  category: Categories; //명시된 string 중 하나만 가져야한다.
 }
 
-export const categoryState = atom<categories>({
+export const categoryState = atom<Categories>({
   key: "category",
-  default: "TO_DO",
+  default: Categories.TO_DO,
 });
 
 export const toDoState = atom<IToDo[]>({
