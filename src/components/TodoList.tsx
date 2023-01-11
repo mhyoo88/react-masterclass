@@ -22,7 +22,7 @@ function TodoList() {
   const toDos = useRecoilValue(toDoSelector);
   const [category, setcategory] = useRecoilState(categoryState); //조회, 수정function
   const onInput = (event: React.FormEvent<HTMLSelectElement>) => {
-    setcategory(event.currentTarget.value); // 해당 value
+    setcategory(event.currentTarget.value as any); // 해당 value
   };
   console.log(category); //셀릭트 값에 따라서 상태가 변한다.
   return (
