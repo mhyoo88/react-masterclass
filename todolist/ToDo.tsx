@@ -1,7 +1,7 @@
 import React from "react";
 import { useSetRecoilState } from "recoil";
 import { idText } from "typescript";
-import { Categories, IToDo, toDoState } from "../atoms";
+import { Categories, IToDo, toDoState } from "./atoms2222";
 
 function ToDO({ text, category, id }: IToDo) {
   const setToDos = useSetRecoilState(toDoState);

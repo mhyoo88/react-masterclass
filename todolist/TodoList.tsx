@@ -1,5 +1,10 @@
 import { useRecoilState, useRecoilValue } from "recoil";
-import { Categories, categoryState, toDoSelector, toDoState } from "../atoms";
+import {
+  Categories,
+  categoryState,
+  toDoSelector,
+  toDoState,
+} from "./atoms2222";
 import CreacteToDo from "./CreateToDo";
 import ToDo from "./ToDo";
 import styled from "styled-components";
