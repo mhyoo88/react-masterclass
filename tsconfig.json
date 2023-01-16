@@ -16,11 +16,5 @@
     "noEmit": true,
     "jsx": "react-jsx"
   },
-  "include": [
-    "src",
-    "todolist/TodoList.tsx",
-    "todolist/ToDo.tsx",
-    "todolist/CreateToDo.tsx",
-    "todolist/atoms2222.tsx"
-  ]
+  "include": ["src"]
 }

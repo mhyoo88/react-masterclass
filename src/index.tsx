@@ -55,10 +55,7 @@ const GlobalStyle = createGlobalStyle`
     line-height: 1;
     font-family: 'Source Sans Pro', sans-serif;
     background-color: ${(props) => props.theme.bgColor};
-    color: ${(props) => props.theme.textColor};
-
-    max-width: 600px;
-    margin: 80px auto 0px;
+    color: black;
   }
   table {
     border-collapse: collapse;
@@ -75,12 +72,10 @@ if (!rootElement) throw new Error("Failed to find the root element");
 const root = ReactDOM.createRoot(rootElement);
 
 root.render(
-  <React.StrictMode>
-    <RecoilRoot>
-      <ThemeProvider theme={darkTheme}>
-        <GlobalStyle />
-        <App />
-      </ThemeProvider>
-    </RecoilRoot>
-  </React.StrictMode>
+  <RecoilRoot>
+    <ThemeProvider theme={darkTheme}>
+      <GlobalStyle />
+      <App />
+    </ThemeProvider>
+  </RecoilRoot>
 );
