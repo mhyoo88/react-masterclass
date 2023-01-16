@@ -14,20 +14,22 @@ interface IDragabbleCardProps {
   index: number;
 }
 function DragabbleCard({ toDo, index }: IDragabbleCardProps) {
-  console.log(toDo, "has been rendered");
+  // console.log(toDo, "has been rendered");
   return (
-    <Draggable key={toDo} draggableId={toDo} index={index}>
-      {(magic) => (
-        <Card
-          ref={magic.innerRef}
-          {...magic.draggableProps}
-          {...magic.dragHandleProps}
-        >
-          <span>🔥</span>
-          {toDo}
-        </Card>
-      )}
-    </Draggable>
+    <>
+      <Draggable key={toDo} draggableId={toDo} index={index}>
+        {(magic) => (
+          <Card
+            ref={magic.innerRef}
+            {...magic.draggableProps}
+            {...magic.dragHandleProps}
+          >
+            <span>🔥</span>
+            {toDo}
+          </Card>
+        )}
+      </Draggable>
+    </>
   );
 }
 
