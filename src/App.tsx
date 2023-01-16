@@ -28,7 +28,9 @@ function App() {
     //draggableId: 타겟id, //destination: 드롭된곳 //source: 드롭된 index
     const { destination, draggableId, source } = info;
 
-    if (destination?.droppableId === source.droppableId) {
+    if (!destination) return;
+
+    if (destination.droppableId === source.droppableId) {
       //same board movement.
       setTODos((allBoards) => {
         // 모든 boards 를 가져와서
@@ -40,6 +42,21 @@ function App() {
         return {
           ...allBoards, // 남은 board들을 return 하고
           [source.droppableId]: boardCopy, //변형된 곳에서 새로운 배열을 적용
+        };
+      });
+    }
+
+    if (destination.droppableId !== source.droppableId) {
+      //cross board movement
+      setTODos((allBoards) => {
+        const sourceBoard = [...allBoards[source.droppableId]];
+        const destinationBoard = [...allBoards[destination.droppableId]];
+        sourceBoard.splice(source.index, 1);
+        destinationBoard.splice(destination?.index, 0, draggableId);
+        return {
+          ...allBoards,
+          [source.droppableId]: sourceBoard,
+          [destination.droppableId]: destinationBoard,
         };
       });
     }
