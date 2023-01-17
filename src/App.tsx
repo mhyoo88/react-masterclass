@@ -27,7 +27,6 @@ function App() {
   const onDragEnd = (info: DropResult) => {
     //draggableId: 타겟id, //destination: 드롭된곳 //source: 드롭된 index
     const { destination, draggableId, source } = info;
-
     if (!destination) return;
 
     if (destination.droppableId === source.droppableId) {
@@ -35,9 +34,10 @@ function App() {
       setTODos((allBoards) => {
         // 모든 boards 를 가져와서
         const boardCopy = [...allBoards[source.droppableId]]; // source의 droppabledId 로부터 array를 복사
+        const taskObj = boardCopy[source.index]; //내가 옮기려고 하는 to do obj 전체를 가져옴
 
         boardCopy.splice(source.index, 1);
-        boardCopy.splice(destination?.index, 0, draggableId); // 복사본을 변형한후
+        boardCopy.splice(destination?.index, 0, taskObj); // 복사본을 변형한후
 
         return {
           ...allBoards, // 남은 board들을 return 하고
@@ -50,9 +50,10 @@ function App() {
       //cross board movement
       setTODos((allBoards) => {
         const sourceBoard = [...allBoards[source.droppableId]];
+        const taskObj = sourceBoard[source.index]; //내가 옮기려고 하는 to do obj 전체를 가져옴
         const destinationBoard = [...allBoards[destination.droppableId]];
         sourceBoard.splice(source.index, 1);
-        destinationBoard.splice(destination?.index, 0, draggableId);
+        destinationBoard.splice(destination?.index, 0, taskObj);
         return {
           ...allBoards,
           [source.droppableId]: sourceBoard,
