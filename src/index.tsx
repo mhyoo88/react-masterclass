@@ -1,8 +1,7 @@
-import React from "react";
 import ReactDOM from "react-dom/client";
 import { RecoilRoot } from "recoil";
 import { ThemeProvider } from "styled-components";
-import { darkTheme } from "./theme";
+import { theme } from "./theme";
 import App from "./App";
 import { createGlobalStyle } from "styled-components";
 
@@ -54,8 +53,6 @@ const GlobalStyle = createGlobalStyle`
   body {
     line-height: 1;
     font-family: 'Source Sans Pro', sans-serif;
-    background-color: ${(props) => props.theme.bgColor};
-    color: black;
   }
   table {
     border-collapse: collapse;
@@ -73,7 +70,7 @@ const root = ReactDOM.createRoot(rootElement);
 
 root.render(
   <RecoilRoot>
-    <ThemeProvider theme={darkTheme}>
+    <ThemeProvider theme={theme}>
       <GlobalStyle />
       <App />
     </ThemeProvider>
