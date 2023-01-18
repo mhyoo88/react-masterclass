@@ -32,6 +32,7 @@ function App() {
     if (destination.droppableId === source.droppableId) {
       //same board movement.
       setTODos((allBoards) => {
+        console.log(allBoards);
         // 모든 boards 를 가져와서
         const boardCopy = [...allBoards[source.droppableId]]; // source의 droppabledId 로부터 array를 복사
         const taskObj = boardCopy[source.index]; //내가 옮기려고 하는 to do obj 전체를 가져옴
